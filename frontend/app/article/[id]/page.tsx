@@ -1,5 +1,6 @@
-import SuggestedPosts from "@/components/Article/SuggestedPosts";
+import SuggestedPosts from "@/components/article/SuggestedPosts";
 import BreadCrumbs from "@/components/BreadCrumbs";
+import CommentsContainer from "@/components/comments/CommentsContainer";
 import { images } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -94,6 +95,7 @@ const ArticleDetailPage = () => {
               Aperiam, consequatur.
             </p>
           </div>
+          <CommentsContainer className="mt-10" logginedUserId="a" />
         </article>
         <SuggestedPosts
           header="Latest Article"
