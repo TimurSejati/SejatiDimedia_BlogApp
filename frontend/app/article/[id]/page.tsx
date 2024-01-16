@@ -1,6 +1,8 @@
 import SuggestedPosts from "@/components/article/SuggestedPosts";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import CommentsContainer from "@/components/comments/CommentsContainer";
+import SocialShareButtons from "@/components/SocialSharedButton";
+import SocialSharedButton from "@/components/SocialSharedButton";
 import { images } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -97,12 +99,25 @@ const ArticleDetailPage = () => {
           </div>
           <CommentsContainer className="mt-10" logginedUserId="a" />
         </article>
-        <SuggestedPosts
-          header="Latest Article"
-          posts={postsData}
-          tags={tagsData}
-          className="mt-8 lg:mt-0 lg:max-w-xs"
-        />
+        <div>
+          <SuggestedPosts
+            header="Latest Article"
+            posts={postsData}
+            tags={tagsData}
+            className="mt-8 lg:mt-0 lg:max-w-xs"
+          />
+          <div className="mt-7">
+            <h2 className="font-roboto font-medium text-dark-hard mb-4 md:text-xl">
+              Share on:
+            </h2>
+            <SocialShareButtons
+              url="https://twitter.com"
+              title="Client-side and server-side explanation"
+              // url={encodeURI(window.location.href)}
+              // title={encodeURIComponent(data?.title)}
+            />
+          </div>
+        </div>
       </section>
     </div>
   );
