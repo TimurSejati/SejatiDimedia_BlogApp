@@ -1,14 +1,18 @@
 import express from "express";
-const routes = express.Router();
+const router = express.Router();
 import {
   loginUser,
   registerUser,
   userProfile,
+  updateProfile,
+  updateProfilePicture,
 } from "../controllers/userControllers.js";
 import { authGuard } from "../middleware/authMiddleware.js";
 
-routes.post("/register", registerUser);
-routes.post("/login", loginUser);
-routes.get("/profile", authGuard, userProfile);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.get("/profile", authGuard, userProfile);
+router.put("/updateProfile", authGuard, updateProfile);
+router.put("/updateProfilePicture", authGuard, updateProfilePicture);
 
-export default routes;
+export default router;
