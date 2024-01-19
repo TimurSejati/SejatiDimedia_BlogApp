@@ -42,6 +42,8 @@ const loginUser = async (req, res, next) => {
       email,
     });
 
+    console.log(email, password);
+
     if (!user) {
       throw new Error("Email not found");
     }

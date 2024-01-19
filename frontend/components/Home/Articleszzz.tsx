@@ -1,8 +1,11 @@
 import React from "react";
 import ArticleCard from "../ArticleCard";
 import { FaArrowRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Articles = () => {
+  const count = useSelector((state) => state.count);
+
   return (
     <section className="flex flex-col container mx-auto  px-5 py-10">
       <div className="flex flex-wrap md:gap-x-5 gap-y-5 pb-10">
@@ -13,6 +16,11 @@ const Articles = () => {
         <span>More articles</span>
         <FaArrowRight className="w-3 h-3" />
       </button>
+      <div className="mt-2 flex items-center gap-x-5">
+        <button>decrase</button>
+        {count.number}
+        <button>incrase</button>
+      </div>
     </section>
   );
 };

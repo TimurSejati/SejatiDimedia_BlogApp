@@ -1,11 +1,14 @@
 "use client";
 
 import { images } from "@/constants";
+import { logout } from "@/redux/actions/user";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 interface NavItemProps {
   item: { name: string; type: string; items?: string[] };
@@ -73,7 +76,11 @@ const NavItem: React.FC<NavItemProps> = ({ item }) => {
 };
 
 const Header = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [navIsVisible, setNavIsVisible] = useState(false);
+  const userState = useSelector((state: any) => state.user);
+  const [profileDropwdown, setProfileDropwdown] = useState(false);
 
   const navVisibilityHandler = () => {
     setNavIsVisible((curState) => {
@@ -81,6 +88,10 @@ const Header = () => {
 
       return !curState;
     });
+  };
+
+  const logoutHandler = () => {
+    dispatch(logout());
   };
 
   return (
@@ -114,9 +125,50 @@ const Header = () => {
               <NavItem key={item.name} item={item} />
             ))}
           </ul>
-          <button className="mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300">
-            Sign In
-          </button>
+          {userState.userInfo ? (
+            <div className="text-white items-center gap-y-5 lg:text-dark-soft flex flex-col lg:flex-row gap-x-5 font-semibold">
+              <div className="relative group">
+                <div className="flex flex-col items-center">
+                  <Link
+                    href="/"
+                    className="px-4 py-2 flex gap-x-1 items-center"
+                    onClick={() => setProfileDropwdown(true)}
+                  >
+                    <span>Profile</span>
+                    <MdKeyboardArrowDown />
+                  </Link>
+                  <div
+                    className={`${
+                      profileDropwdown ? "block" : "hidden"
+                    } lg:hidden transition-all duration-500 pt-4 lg:absolute lg:bottom-0 lg:right-0 lg:transform lg:translate-y-full lg:group-hover:block w-max`}
+                  >
+                    <ul className="bg-dark-soft lg:bg-transparent flex flex-col shadow-lg rounded-lg overflow-hidden">
+                      <button
+                        type="button"
+                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-white lg:text-dark-soft"
+                      >
+                        Dashboard
+                      </button>
+                      <button
+                        onClick={logoutHandler}
+                        type="button"
+                        className="hover:bg-dark-hard hover:text-white px-4 py-2 text-white lg:text-dark-soft"
+                      >
+                        Logout
+                      </button>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => router.push("/login")}
+              className="mt-5 lg:mt-0 border-2 border-blue-500 px-6 py-2 rounded-full text-blue-500 font-semibold hover:bg-blue-500 hover:text-white transition-all duration-300"
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </header>
     </section>
